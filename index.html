@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justice for Veterans | H4145 & S907</title>
+    <style>
+        :root {
+            --usa-red: #B22234;
+            --usa-blue: #3C3B6E;
+            --usa-white: #FFFFFF;
+            --usa-grey: #F4F4F4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--usa-grey);
+            margin: 0;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--usa-blue);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 8px solid var(--usa-red);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .hero-text {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-left: 10px solid var(--usa-red);
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        input[type="text"] {
+            padding: 15px;
+            width: 60%;
+            border: 2px solid var(--usa-blue);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button.search-btn {
+            padding: 15px 30px;
+            background-color: var(--usa-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card h3 { color: var(--usa-blue); margin-top: 0; }
+        
+        .script-box {
+            background: #f9f9f9;
+            border: 1px dashed var(--usa-blue);
+            padding: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .call-btn {
+            display: block;
+            text-align: center;
+            background: #28a745;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .call-btn:hover { background: #218838; }
+
+        .tag {
+            font-size: 0.7rem;
+            background: var(--usa-blue);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        /* NEW: Collapsible section styling */
+        .why-toggle {
+            background: none;
+            border: none;
+            color: var(--usa-blue);
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .why-content {
+            display: none;
+            background: #eef4ff;
+            border-left: 4px solid var(--usa-blue);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>HONOR THE PACT ACT</h1>
+    <p>Justice for Camp Lejeune Veterans & Families</p>
+</header>
+
+<div class="container">
+    <section class="hero-text">
+        <h2>The Fight Isn't Over</h2>
+        <p>The PACT Act promised justice, but legal loopholes are blocking Camp Lejeune victims from their day in court. <b>H.R. 4145</b> and <b>S. 907</b> are technical corrections that ensure jury trials and stop administrative delays. We need these bills on the floor for a vote <strong>now</strong>.</p>
+    </section>
+
+    <div class="search-section">
+        <h3>Find Your Representatives</h3>
+        <input type="text" id="address" placeholder="Enter your full street address, city, state...">
+        <button class="search-btn" onclick="lookup()">Find Representatives</button>
+    </div>
+
+    <div class="grid" id="results">
+
+        <!-- Your static cards remain untouched -->
+        <div class="card">
+            <span class="tag">House Judiciary Chair</span>
+            <h3>Issue 3: Move H.R. 4145</h3>
+            <p><strong>Target:</strong> Rep. Jim Jordan</p>
+            <div class="script-box">
+                "As Chairman of the Judiciary Committee, I urge you to move H.R. 4145 to the floor. Veterans have waited decades for justice; stop the procedural delays."
+            </div>
+            <a href="tel:12022252676" class="call-btn">📞 Call Chair Jordan</a>
+        </div>
+
+        <div class="card">
+            <span class="tag">Senate Judiciary</span>
+            <h3>Issue 4: Move S. 907</h3>
+            <p><strong>Target:</strong> Sen. Chuck Grassley</p>
+            <div class="script-box">
+                "I am urging you to push S. 907 to the Senate floor for a vote. We must fix the PACT Act loopholes to ensure toxic exposure victims get their day in court."
+            </div>
+            <a href="tel:12022243744" class="call-btn">📞 Call Sen. Grassley</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+async function lookup() {
+    const addressInput = document.getElementById('address');
+    const resultsDiv = document.getElementById('results');
+    const apiKey = 'cc8215af-ea85-44c6-88bc-5c2a145aadaa';
+
+    if (!addressInput.value) {
+        alert("Please enter an address");
+        return;
+    }
+
+    const originalBtnText = document.querySelector('.search-btn').innerText;
+    document.querySelector('.search-btn').innerText = "Searching...";
+
+    try {
+        // 1. Geocode
+        const geoRes = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(addressInput.value)}`
+        );
+        const geoData = await geoRes.json();
+
+        if (!geoData || geoData.length === 0) {
+            alert("Address not found. Try adding city + state.");
+            document.querySelector('.search-btn').innerText = originalBtnText;
+            return;
+        }
+
+        const { lat, lon } = geoData[0];
+
+        // 2. OpenStates
+        const repRes = await fetch(
+            `https://v3.openstates.org/people.geo?lat=${lat}&lng=${lon}`,
+            { headers: { 'X-API-KEY': apiKey } }
+        );
+
+        if (!repRes.ok) {
+            throw new Error(`API Error: ${repRes.status}`);
+        }
+
+        const repData = await repRes.json();
+
+        // 3. Preserve static cards
+        const staticCards = Array.from(
+            resultsDiv.querySelectorAll('.card:not(.dynamic)')
+        ).map(card => card.cloneNode(true));
+
+        resultsDiv.innerHTML = '';
+        staticCards.forEach(c => resultsDiv.appendChild(c));
+
+        // 4. Filter federal reps
+        const federal = repData.results.filter(
+            r => r.jurisdiction?.name === "United States"
+        );
+
+        // 5. Build cards
+        federal.forEach(person => {
+            const chamber = person.current_role?.org_classification;
+            const isSenate = chamber === "upper";
+
+            const bill = isSenate ? "S. 907" : "H.R. 4145";
+            const issueNum = isSenate ? "2" : "1";
+
+            const contactUrl = person.email || person.openstates_url;
+
+            const card = document.createElement('div');
+            card.className = 'card dynamic';
+
+            card.innerHTML = `
+                <span class="tag">${isSenate ? "U.S. Senator" : "U.S. Representative"}</span>
+                <h3>Issue ${issueNum}: Co-Sponsor ${bill}</h3>
+                <p><strong>Target:</strong> ${person.name}</p>
+
+                <!-- NEW: Collapsible Why This Matters -->
+                <button class="why-toggle">Why this matters ▼</button>
+                <div class="why-content">
+                    <p><strong>Why this matters:</strong></p>
+                    <p>
+                        Supporters of H.R. 4145 and S. 907 argue that these bills are urgently needed because 
+                        little progress has been made in resolving Camp Lejeune claims. Many veterans and families 
+                        report that the Department of Justice continues to delay cases, contributing to a growing backlog.
+                    </p>
+                    <p>
+                        These bills would cap attorney fees at 25%, reduce the burden of proof for toxic exposure, 
+                        and expand jurisdiction so more courts can hear cases. Advocates say these changes would 
+                        finally help veterans get timely, fair access to justice.
+                    </p>
+                </div>
+
+                <div class="script-box">
+                    "Hi, I am a constituent. I'm calling to urge ${person.name} to co-sponsor ${bill}.
+                    Very little progress has been made in resolving Camp Lejeune claims, and many veterans feel 
+                    the Department of Justice continues to delay justice. These bills would help fix that by 
+                    capping attorney fees at 25%, reducing the burden of proof, and expanding jurisdiction so 
+                    cases can move faster. Veterans and families have waited long enough. Thank you."
+                </div>
+
+                <a href="${contactUrl}" target="_blank" class="call-btn">
+                    📞 Contact ${person.name}
+                </a>
+            `;
+
+            resultsDiv.prepend(card);
+        });
+
+    } catch (err) {
+        alert(err.message);
+    } finally {
+        document.querySelector('.search-btn').innerText = originalBtnText;
+    }
+}
+
+// NEW: Collapsible toggle
+document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("why-toggle")) {
+        const content = e.target.nextElementSibling;
+        const open = content.style.display === "block";
+        content.style.display = open ? "none" : "block";
+        e.target.textContent = open ? "Why this matters ▼" : "Why this matters ▲";
+    }
+});
+</script>
+
+</body>
+</html>
+
